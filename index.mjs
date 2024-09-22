@@ -1,24 +1,23 @@
-import express from 'express'
+import express from 'express';
 
 const app = express();
-const PORT = 3000;
+const port = 3000;
+
 
 app.use(express.json());
 
-// Array to store data 
+
 let userArray = [];
 
-
-const findUserById = (id) =>{\
+// Helper function to find user by ID
+const findUserById = (id) => {
     return userArray.find(user => user.id === id);
-}
+};
 
-// Get request to fetch all users 
-
-app.get('/user', (req, res)=>{
-res.status(200).json(userArray);
+// GET request to fetch all users
+app.get('/users', (req, res) => {
+    res.status(200).json(userArray);
 });
-
 
 // POST request to create a new user
 app.post('/users', (req, res) => {
@@ -45,7 +44,7 @@ app.put('/users/:id', (req, res) => {
     const user = findUserById(id);
 
     if (user) {
-       
+        
         const { name, description } = req.body;
         user.name = name !== undefined ? name : user.name;
         user.description = description !== undefined ? description : user.description;
@@ -56,7 +55,7 @@ app.put('/users/:id', (req, res) => {
     }
 });
 
-// Deleter request to remove a user 
+// DELETE request to remove a user
 app.delete('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = userArray.findIndex(user => user.id === id);
@@ -69,3 +68,7 @@ app.delete('/users/:id', (req, res) => {
     }
 });
 
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+});
