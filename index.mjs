@@ -43,3 +43,17 @@ app.post('/users', (req, res) => {
 app.put('/users/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const user = findUserById(id);
+
+    if (user) {
+       
+        const { name, description } = req.body;
+        user.name = name !== undefined ? name : user.name;
+        user.description = description !== undefined ? description : user.description;
+
+        res.status(200).json(user);
+    } else {
+        res.status(404).json({ message: 'User not found' });
+    }
+});
+
+
