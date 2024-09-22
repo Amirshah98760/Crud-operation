@@ -7,7 +7,10 @@ const port = 3000;
 app.use(express.json());
 
 
-let userArray = [];
+let userArray = [
+    { id: 1, name: "Amin Khan", description: "A dedicated software engineer." },
+    { id: 2, name: "Omar Farooq", description: "A project manager." }
+];
 
 // Helper function to find user by ID
 const findUserById = (id) => {
